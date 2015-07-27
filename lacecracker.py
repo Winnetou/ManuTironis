@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 #coding:utf-8
-#
 
-#set of functions for download and initial cracking of Lace texts
+#this is a set of functions for download and initial cracking of Lace texts
 import pickle
 #import re
 from bs4 import BeautifulSoup
@@ -12,9 +11,9 @@ import os.path
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
-from pylev import classic_levenschtein
+#from pylev import classic_levenschtein
 from fuzzywuzzy import fuzz
-#glob_data = {'www':}
+
 
 def give_link(number):
     beg = 'http://heml.mta.ca/lace/text/static/Texts/corpusscriptorum04nieb/2013-07-21-13-28_weidmann4_combined_hocr_output/corpusscriptorum04nieb_'
@@ -60,7 +59,6 @@ def all_letters_latin(word):
         return True
     return False
 
-
 def all_words_latin(words):
     '''take a line and check if it's all latin '''
     if not any(word.has_attr('lang') and word['lang']=="grc" for word in words)\
@@ -68,8 +66,6 @@ def all_words_latin(words):
         return True
     return False
 
-
-                
 def make_header(line, header_data):
     '''Rather then crunching data from lousy ocr 
     use data provided by terrestrial inteleligence
@@ -102,13 +98,13 @@ def find_first_line(lines):
     like on page 277
     =therefore this function tries to find it '''
     score = []
-    for index, line in enumerate(lines[:5]):
+    for line in lines:
         tex = "".join(x.text for x in line.findAll('span', 'ocr_word'))
-        score.append([index, line, fuzz.ratio(tex, "CHRONICON")+fuzz.ratio(tex, "PASCHALE")])
+        score.append([line, fuzz.ratio(tex, "CHRONICON")+fuzz.ratio(tex, "PASCHALE")])
     #    if any(x in "".join(x.text for x in line.findAll('span', 'ocr_word')) for x in ["ASCHAL","CHR","HRO","ONIC","PASC"]):
-    index, line = [ [x[0],x[1]] for x in score if x[2]==max([y[2] for y in score])][0]
-    print "returning", index, line
-    return line, index
+    line = [ x[0] for x in score if x[1]==max([y[1] for y in score])][0]
+    print "returning", line
+    return line
 
 def clean_text(text, x):
     '''Take html and clean it '''
@@ -129,7 +125,7 @@ def clean_text(text, x):
     if len(first_p_lines)>1:
         print "double first_p_lines"
     header_data = {"page_number":x-16, 'titles':["CHRONICON","PASCHALE"]}
-    likely_first_line, its_index = find_first_line(first_p_lines)
+    likely_first_line = find_first_line(first_p_lines)
     first_p = make_header(likely_first_line,header_data)
     ret.append(first_p)
     for p in pis[1:]:
@@ -160,54 +156,31 @@ def clean_text(text, x):
                             #joined_word = clean(joined_word)
                             if is_correct(joined_word):
                                 word["corr"]=1
+                                word["half"]=1
+                                word["full"]=joined_word
                                 next_line_words[0]['corr']=1
+                                next_line_words[0]['half']=2
                         except IndexError:
-                            #here we should find try find next page - if exists
-                            # skipping first line
                             continue
                     else:
                         word["corr"]=0
-            ret.append(p)
+            # now, structure the text, keeping paragraphs, mark what is: i. greek text iii. apparatus criticus iii. Latin translation
+        number_of_words = len(p.findAll('span'))
+        print number_of_words
+        number_of_greek_words = len([wo for wo in p.findAll('span') if wo.has_attr('lang') and wo['lang']=="grc"])
+        print number_of_greek_words
+        if number_of_greek_words*2 > number_of_words:# if 70% of words are greek
+            p['class'] = "greek_text"
+        else:
+            p['class'] = "latin_translation"
+
+        ret.append(p)
     full_text =  "\n".join([str(x) for x in ret])
     return full_text
 
-def structure_text(text, data):
-    '''This maybe applicable to Niebuhr's eidtion only
-    Take page and divide it into four section:
-    i. header (just use value provided, since we skipped first line in clean text function)
-    ii. greek text
-    iii. apparatus criticus
-    iv. Latin translation
-    but add metadata first
-    '''
-    htmlheader = '<div class="page" '
-    for k in data.iterkeys():
-        val = str(k)+'="'+ str(data[k])+'" '
-        htmlheader = htmlheader + val
-    htmlheader = htmlheader +'> '
-    '''
-    body = "<span></span>"
-    soup = BeautifulSoup(text)
-    lines = soup.findAll('span','ocr_line')
-    # here, very simple logic: if most of the words are greek
-    #its greek
-
-    for index, item in enumerate(lines[:-1]):
-        words  = item.findAll('span')
-        next_line_words = lines[index+1].findAll('span')
-        #if all(word.has_attr('lang') and word['lang']=="grc" for word in words) and all() 
-        #TO JEST ZLE NIE JESTE DOBRZE OJ NIE NIE
-    full_text = htmlheader + body+' </div>'
-    '''
-    full_text = htmlheader + text+' </div>'
-    return full_text
-
-
 def main(r=range(276,280)):
     '''Fetch a range of pages, clean them and save as a file '''
-
-    print  '''Finish unfinished: 1.Divide page into header, greek text, apparatus criticus and Latin translation 2. Try better with word being continued in the nexte line;'''
-
+    print  '''Finish unfinished: Try better with word being continued in the nexte line;'''
     pat = os.path.join(os.path.dirname(os.path.realpath('__file__')),'result_2')
     try:
         os.remove(pat)
@@ -219,15 +192,18 @@ def main(r=range(276,280)):
         link = give_link(x)
         v = requests.get(link)
         print "Fetched ", x
-        b=v._content
-        k = clean_text(b, x)
+        cleaned = clean_text(v._content, x)
         data = {
                 "origin":link,
                 "lacetitle": "Niebuhr, Barthold Georg, 1776-1831 et al. (1828). Corpus scriptorum historiae byzantinae. Editio emendatior et copiosior. consilio B.G. Niebuhrii 4",
                 "title": "Chronicon Paschale" 
                 }
-            
-        kon = structure_text(k, data)
+        htmlheader = '<div class="page" '
+        for key in data.iterkeys():
+            val = str(key)+'="'+ str(data[key])+'" '
+            htmlheader = htmlheader + val
+        #htmlheader = htmlheader +'> '
+        kon = htmlheader + '>\n '+ cleaned +' </div>'
         result_file.write(kon)
         result_file.flush()
     result_file.close()
