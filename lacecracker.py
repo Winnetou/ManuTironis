@@ -13,8 +13,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 #from pylev import classic_levenschtein
 from fuzzywuzzy import fuzz
-
-
+import sqlite3
+'''
 def give_link(number):
     beg = 'http://heml.mta.ca/lace/text/static/Texts/corpusscriptorum04nieb/2013-07-21-13-28_weidmann4_combined_hocr_output/corpusscriptorum04nieb_'
     num = str(number)#must be four chars, preceed by zeros if needed
@@ -22,7 +22,7 @@ def give_link(number):
         num = '0'+num
     link = beg+num+'.html'
     return link
-
+'''
 def clean(word):
     '''
     If word ends with . or , 
@@ -83,9 +83,8 @@ def make_header(line, header_data):
         best_title = header_data['titles'][0]
     else: 
         best_title = header_data['titles'][1]
-
-    if header_data['page_number']>350: #that value must be different for every volume of Niebuhr
-        header_data['page_number']=+1
+    #if header_data['page_number']>350: #that value must be different for every volume of Niebuhr
+    #    header_data['page_number']=+1
     if header_data['page_number']%2==0:
         return '<p class="header"><span class="pagination">%s</span><span class="pagetitle">%s</span></p>' %(header_data['page_number'], best_title)
     else:
@@ -106,13 +105,27 @@ def find_first_line(lines):
     print "returning", line
     return line
 
-def clean_text(text, x):
-    '''Take html and clean it '''
-    #TODO - something must be done with punctuation
-    ret = []
+
+
+'''
+def initial_clean(text):
     soup = BeautifulSoup(text)
-    #span ocr_carea it the main content, it is divided into <p>
-    # we need to keep <p> structure
+    alz = soup.findAll('span')
+    for every in alz:
+        del every['bbox']
+        del every['title']
+        del every['class']
+        del every['xml:lang']
+        del every['data-lat-original']
+
+    return str(soup)
+'''
+def clean_text(text, page_number):
+    '''Take html and clean it '''
+    ret = []
+    #text = initial_clean(text)
+    soup = BeautifulSoup(text)
+    #here we make header
     ocr_carea = soup.findAll('span','ocr_carea')
     if len(ocr_carea)>1:
         print "double ocr_carea"
@@ -124,19 +137,19 @@ def clean_text(text, x):
     first_p_lines = pis[0].findAll('span','ocr_line')
     if len(first_p_lines)>1:
         print "double first_p_lines"
-    header_data = {"page_number":x-16, 'titles':["CHRONICON","PASCHALE"]}
+    header_data = {"page_number":page_number, 'titles':["CHRONICON","PASCHALE"]}
     likely_first_line = find_first_line(first_p_lines)
     first_p = make_header(likely_first_line,header_data)
     ret.append(first_p)
+    #end of header creation 
     for p in pis[1:]:
         lines = p.findAll('span','ocr_line')
-        for line in lines:
-            del line['bbox']
-            del line['title']
+        for line in lines: 
             words = line.findAll('span', 'ocr_word')
             for word in words:
-                del word['class']
+                del word['bbox']
                 del word['title']
+                del word['class']
                 del word['xml:lang']
                 del word['data-lat-original']
                 # correct only greek words:
@@ -145,6 +158,30 @@ def clean_text(text, x):
                     and not word.has_attr('corr'): # last condition: corr may have been added if the word was recognized as continued from the previous line
                     if is_correct(word.text):
                         word["corr"]=1
+                    #here we deal with situation where two words separated by white space are contained in one 
+                    elif " " in word.text:
+                        print "$", word.text
+                        two_words = word.text.split(" ")
+                        print word
+                        if any([is_correct(wr) for wr in two_words]):
+                            #step one: two words inside teh tag replaced with first
+                            good_form = two_words[0]
+                            word.string = good_form
+                            #now add new tag
+                            new_node = soup.new_tag("span")
+                            new_node["lang"]="grc"
+                            new_node.string = two_words[1]
+                            if is_correct(two_words[1]):
+                                new_node["corr"]=1
+                            else:
+                                new_node["corr"]=0
+                            print new_node
+                            both_bastards = str(word)+str(new_node)
+                            print both_bastards
+                            word.replace_with(both_bastards)
+                              
+                            
+                            
                     #here we deal with words continued in the next line of text
                     elif words[::-1].index(word)==0 and word.text.strip().endswith('-'): # if thats the last word in that line and continued in another
                         next_line_index = lines.index(line)+1 
@@ -166,44 +203,74 @@ def clean_text(text, x):
                         word["corr"]=0
             # now, structure the text, keeping paragraphs, mark what is: i. greek text iii. apparatus criticus iii. Latin translation
         number_of_words = len(p.findAll('span'))
-        print number_of_words
         number_of_greek_words = len([wo for wo in p.findAll('span') if wo.has_attr('lang') and wo['lang']=="grc"])
-        print number_of_greek_words
-        if number_of_greek_words*2 > number_of_words:# if 70% of words are greek
+        if number_of_greek_words*2 >= number_of_words:# if 70% of words are greek
             p['class'] = "greek_text"
         else:
             p['class'] = "latin_translation"
-
+        #final stage: we add ids to every word
+        counter = 0
+        lines = p.findAll('span','ocr_line')
+        for line in lines: 
+            words = line.findAll('span', 'ocr_word')
+            for word in words:
+                word["id"]=counter
         ret.append(p)
     full_text =  "\n".join([str(x) for x in ret])
     return full_text
 
-def main(r=range(276,280)):
+def main(r=range(4326744,4326754)):
     '''Fetch a range of pages, clean them and save as a file '''
-    print  '''Finish unfinished: Try better with word being continued in the nexte line;'''
-    pat = os.path.join(os.path.dirname(os.path.realpath('__file__')),'result_2')
-    try:
-        os.remove(pat)
-    except OSError:
-        pass
-    result_file = open(pat, 'a')
-    
-    for x in r:
-        link = give_link(x)
-        v = requests.get(link)
-        print "Fetched ", x
-        cleaned = clean_text(v._content, x)
+    result = []
+    for x in r: 
+        link = "http://heml.mta.ca/lace/sidebysideview2/"+str(x)
+        whole_page = requests.get(link)._content
+        soup = BeautifulSoup(whole_page)
+        image = soup.find(attrs={'id':'page_image'})
+        image_url = 'http://heml.mta.ca'+image['src']
+        link_to_iframe = 'http://heml.mta.ca'+soup.find(attrs={'id':'page_right'}).findChild('iframe')['src']
+        v = requests.get(link_to_iframe)
+        page_number = x-4326425
+        cleaned = clean_text(v._content, page_number)
+        '''
         data = {
-                "origin":link,
+                "origin":link_to_iframe,
                 "lacetitle": "Niebuhr, Barthold Georg, 1776-1831 et al. (1828). Corpus scriptorum historiae byzantinae. Editio emendatior et copiosior. consilio B.G. Niebuhrii 4",
                 "title": "Chronicon Paschale" 
                 }
-        htmlheader = '<div class="page" '
+        
         for key in data.iterkeys():
             val = str(key)+'="'+ str(data[key])+'" '
             htmlheader = htmlheader + val
-        #htmlheader = htmlheader +'> '
-        kon = htmlheader + '>\n '+ cleaned +' </div>'
-        result_file.write(kon)
-        result_file.flush()
-    result_file.close()
+        '''
+        htmlheader = '<div class="page" '
+        kon = htmlheader + '>\n '+ cleaned +' </div>\n'
+        '''
+        record = { "title":"Chronicon Paschale",\
+        "pagenumber":page_number
+        "image_url":image_url,\
+        'text':kon,\
+        'notepad':kon,\
+        }
+        '''
+        record =["Chronicon Paschale",page_number,image_url,kon,kon]
+        result.append(record)
+
+    conn =sqlite3.connect('/Users/QTF/Desktop/ManuTironis/testbase')
+    c = conn.cursor()
+    conn.text_factory = str
+    try:
+        c.execute('create table pages (title text, pagenumber integer, image_url text, page text, notepad text)')
+    except:
+        pass
+    conn.commit()
+    c.executemany("insert into pages values (?,?,?,?,?)", result)
+    conn.commit()
+    c.close()
+    conn.close()
+    return #result 
+
+if __name__== "__main__":
+    main()
+#remember baby: dictionary comes from all words already corrected
+# that is: words appearing as correct

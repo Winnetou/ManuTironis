@@ -1,0 +1,93 @@
+ <!DOCTYPE html> 
+ <html lang="en">  
+    <head>
+        <meta charset="utf-8">
+        <!-- // Change these to better suit your project -->
+        <title>Quellenforschung Database</title>
+        <meta name="description" content="Quellenforschung Database">
+        <meta name="keywords" content="Quellenforschung Database">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+        <meta name="generator" content="">
+        <script src={{url_for('static', filename='jquery.js')}}></script>
+        <script src={{url_for('static', filename='jquery-ui.js')}}></script>
+        <!-- /Sticky header baby/-->
+        <script src={{url_for('static', filename='jquery.sticky.js')}}></script>
+        <!-- /Zoom baby/-->
+        <script src={{url_for('static', filename='jquery.elevatezoom.js')}}></script>
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='jquery-ui.css')}} media="all"> 
+    </head>
+<body>
+ 
+ 
+<div id="wrap">
+    
+    <div id="header">
+        Document Heading
+    </div>
+        
+
+    <div id="main">
+        <img id="scanpage" alt="" src="{{record['image_url']}}" data-zoom-image="{{record['image_url']}}">  
+    </div>
+    
+    <div id="sidebar">
+        {{record['notepad']|safe}}  
+    </div>
+    
+
+</div>
+
+ 
+
+ <style>
+ body,
+html {
+    margin:0px;
+    padding:10px;
+    padding-right:10px;
+
+}
+#header {
+    padding:5px;
+    background:#ddd;
+    text-align: center;
+}
+#wrap {
+    width:100%;
+    margin:0 auto;
+    background:#99c;
+}
+#main {
+    float:left;
+    width:50%;
+    padding:10px;
+}
+#sidebar {
+    float:right;
+    width:45%;
+    padding:10px;
+}
+
+#scanpage {
+    max-width:100%;
+    max-height:100%;
+    text-align: center;
+}
+ </style> 
+
+ <script>
+    $(document).ready(function(){
+    $("#header").sticky({topSpacing:0});
+
+    $("#scanpage").elevateZoom({ 
+        zoomType    : "lens", 
+        lensShape : "round", 
+        lensSize : 200 
+    });  
+
+  });
+
+
+</script>
+
+ </body>
