@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--na razie nie 
+    <title>ManuTironis</title>
+
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="" role="navigation">
+
+    </nav>
+
+    <div id="container" style="width:100%;">                                   
+    <ul>
+    {% for text in all_texts %}
+             <li><a href="/edit/{{text[0]}}/{{text[1]}}">{{text[0]}}</a></li>    
+    {% endfor %}
+    </ul>
+</div> 
+
+    <!-- jQuery -->
+    <script src="static/js/jquery.js"></script>
+
+ 
+</body>
+
+</html>

@@ -14,7 +14,10 @@
         <script src={{url_for('static', filename='jquery.sticky.js')}}></script>
         <!-- /Zoom baby/-->
         <script src={{url_for('static', filename='jquery.elevatezoom.js')}}></script>
+        <script src={{url_for('static', filename='editui.js')}}></script>
+        <link href='http://fonts.googleapis.com/css?family=Didact+Gothic&subset=latin,greek-ext' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href={{url_for('static', filename='jquery-ui.css')}} media="all"> 
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='editui.css')}} media="all"> 
     </head>
 <body>
  
@@ -22,72 +25,86 @@
 <div id="wrap">
     
     <div id="header">
-        Document Heading
+
+        <div class="row">
+            <div>
+                <h3 id="asitis"></h3> 
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <select id="correction_option" disabled="true">
+                    <option value="init">Is this reading is correct ?</option>
+                    <option value="corr">Yes, this is correct !</option>
+                    <option value="incorr">No, this is not correct </option>
+                </select>
+            </div>
+            <div>
+                <select id="semantic_spec"  disabled="true">
+                    <option value="init">Any specific ?</option>>
+                    <option value="">its a numeral</option>
+                    <option value="">its a proper name</option>
+                    <option value="">its pagination, not text!</option>
+                </select>
+            </div>
+            
+            
+        </div>    
+        <div class="row">               
+            <div>
+                <ul id="corr_list">
+
+                </ul> 
+            </div>
+
+            <div style="display:Xnone">
+                <!--input type="text" id="final_input" name="" placeholder="final input"-->
+                <input type="text" id="word_id" name="" placeholder="id of the word">             
+                <input type="text" id="page_id"  name="" placeholder="id of the page">
+            </div>
+            
+            <div>
+                <button id="approve_word" disabled="true" onclick="save()"> SAVE </button>  
+            </div>
+
+        </div>
+         
     </div>
         
 
-    <div id="main">
+    <div id="scanpage_container">
+
         <img id="scanpage" alt="" src="{{record['image_url']}}" data-zoom-image="{{record['image_url']}}">  
+
     </div>
     
-    <div id="sidebar">
+    <div id="page_text_container">
         {{record['notepad']|safe}}  
     </div>
     
+    <div class="arrowNav">
+        
+        <div class="arrowLeft">
+            {% if record['prev_page'] !="" %}
+                <a href="{{record['prev_page']}}"> <<  </a> 
+            {% endif %}     
+        </div>
 
+        <div class="arrowRight" >
+            {% if record['next_page'] !="" %}
+                <a href="{{record['next_page']}}"> >> </a>
+            {% endif %} 
+        </div>
+        
+    </div>
+    
 </div>
 
  
 
- <style>
- body,
-html {
-    margin:0px;
-    padding:10px;
-    padding-right:10px;
-
-}
-#header {
-    padding:5px;
-    background:#ddd;
-    text-align: center;
-}
-#wrap {
-    width:100%;
-    margin:0 auto;
-    background:#99c;
-}
-#main {
-    float:left;
-    width:50%;
-    padding:10px;
-}
-#sidebar {
-    float:right;
-    width:45%;
-    padding:10px;
-}
-
-#scanpage {
-    max-width:100%;
-    max-height:100%;
-    text-align: center;
-}
- </style> 
-
- <script>
-    $(document).ready(function(){
-    $("#header").sticky({topSpacing:0});
-
-    $("#scanpage").elevateZoom({ 
-        zoomType    : "lens", 
-        lensShape : "round", 
-        lensSize : 200 
-    });  
-
-  });
 
 
-</script>
+
+
 
  </body>

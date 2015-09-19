@@ -1,5 +1,22 @@
+#!/usr/bin/env python
 #coding:utf-8
 #set of functions for initial text preparation
+import os
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+import pickle
+from fuzzywuzzy import fuzz
+
+def give_suggestions(incorrect):
+    
+    pat = os.path.join(os.path.dirname(os.path.realpath('__file__')),'frequencies') #there must be a better way to do that
+    f = open(pat)
+    all_words = pickle.load(f)
+    words = [unicode(w[0]) for w in all_words]
+    result = [correct for correct in words if fuzz.ratio(incorrect, correct)>60]
+    return result
+
 
 def find_apparatus(page):
     '''Start from the bottom line
@@ -22,13 +39,14 @@ def join_word():
             last_word = line.split()[-1]
             next_line = page[page.inex(line)+1].strip()
             first_word = next_line.split()[0]
+    pass
 
 def add_unknown_word(word):
     '''
     Here we add new word to the set 
     of accepted forms
     '''
-    accepted_words = 
+    #accepted_words =
     if word in accepted_words:
         return
     accepted_words.add(word)
@@ -126,7 +144,7 @@ def get_trigrams(text):
     trigrams = []
     # FIRST, words will be a list of all words with tags
     # use BeautifulSoup for that 
-    words = 
+    #words = 
     # item is 
     for index, word in enumerate(words):
         if word["corr"]==1 and words[index+1]["corr"]==1 and words[index+2]["corr"]==1:

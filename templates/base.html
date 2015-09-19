@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <!-- // Change these to better suit your project -->
+        <title>Quellenforschung Database</title>
+        <meta name="description" content="Quellenforschung Database">
+        <meta name="keywords" content="Quellenforschung Database">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+        <meta name="generator" content="">
+
+        <!--link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="all"-->        
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='style.css')}}  media="all">
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='IMFeENsc28P.ttf')}} media="all">
+        <!--link rel="stylesheet" type="text/css" href={{url_for('static', filename='GoudyInitialen.ttf')}} media="all"-->
+        <!--<link href='http://fonts.googleapis.com/css?family=Didact+Gothic&subset=latin,greek-ext' rel='stylesheet' type='text/css'>-->       
+        <!--jeszxze czyste jquery-->
+        <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>--> 
+        <script src={{url_for('static', filename='jquery.js')}}></script>
+        <script src={{url_for('static', filename='jquery-ui.js')}}></script>
+        <link rel="shortcut icon" href={{url_for('static', filename="favicon.ico")}}>  
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='jquery-ui.css')}} media="all"> <!--na razie nie uzywany--> 
+	     
+    </head>
+<body>
+    <!--body oncontextmenu="return false;"-->
+    <div class="wrapper column">
+        <div class="column">
+            <h1 id="header"><a href={{url_for('main')}}>Quellenforschung</a></h1>
+{% block body %}
+
+{% endblock %}
+
+
+
+        </div>
+    </div>
+
+</body>
+{% block scripts %}
+
+{% endblock %}
+</html>
