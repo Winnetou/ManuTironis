@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <!-- Navigation -->
+    <div id="header" class="header">
+        record'notepad'
+    </div>
+    
+    <div id="container">
+        <div id="center" class="column">     
+             {{record['notepad']|safe}}                     
+        </div>
+        <div id="left" class="column">  
+            <img id="scanpage" alt="" src="{{record['image_url']}}">                                 
+        </div>
+    
+         
+        
+    
+    </div> 
+
+
+ 
+
+<!--the trick with css for three columns layout comes from here: http://alistapart.com/article/holygrail -->
+<style>
+
+#scanpage {
+    max-width:100%;
+    max-height:100%;
+    text-align: center;
+}
+body {
+  min-width: 550px;      /* 2x LC width + RC width */
+}
+#container {
+  padding-left: 500px;   /* LC width */
+  padding-right: 150px;  /* RC width */
+}
+#container .column {
+  padding: 10px;
+  position: relative;
+  float: left;
+}
+#center {
+  width: 100%;
+}
+#left {
+  width: 500px;          /* LC width */
+  right: 500px;          /* LC width */
+  margin-left: -100%;
+}
+#right {
+  width: 150px;          /* RC width */
+  margin-right: -150px;  /* RC width */
+}
+#footer {
+  clear: both;
+}
+/*** IE6 Fix ***/
+* html #left {
+  left: 150px;           /* RC width */
+}
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function(){
+    $("#header").sticky({topSpacing:0});
+  });
+
+
+</script>
+{% endblock %}

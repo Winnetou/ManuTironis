@@ -38,6 +38,19 @@ html {
     /*border-style: dashed;*/
 }
 
+div.row {
+    width: 100%;
+}
+ul {
+    list-style-type: none;
+    text-align: center;
+}
+li {
+    display: inline;
+}
+#approve_word {
+    width: 20em;  height: 2em;
+}
 /* SET OF CSS RULES FOR ARROWS NAVGIATING FORWARD AND BACK */
 .arrowLeft a {
 position: fixed;
@@ -127,3 +140,7 @@ hr {
     background: #999;
 }
 
+.diacritics {
+    display: none;
+
+}

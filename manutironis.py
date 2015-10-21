@@ -50,16 +50,16 @@ def suggest():
 
 @app.route("/update", methods=['POST'])
 def update():
-    #Ajax - the most important functionality of updating the record
 
-    record_id = request.form['record_id']
-    word_id = request.form['word_id']
-    correct_form = request.form['correct_form']
+    page_id = request.values.get('page_id')
+    word_id = request.values.get('word_id')
+    correct_form = request.values.get('correct_form')
+
     #validation - do it now, before messing with the db
-    if any(len(x)==0 for x in [record_id, word_id, correct_form]):
-        return jsonify({'result':"FAIL"})
-    do_the_update(record_id, word_id, correct_form)
-    if update_was_successful:
+    #if any(len(x)==0 for x in [record_id, word_id, correct_form]):
+    #    return jsonify({'result':"FAIL"})
+    #do_the_update(record_id, word_id, correct_form)
+    if True: #update_was_successful:
         return jsonify({'result':"OK"})
     else:
         return jsonify({'result':"FAIL"})
@@ -71,7 +71,7 @@ def do_the_update(record_id, word_id, correct_form):
     #Here we handle saving that new word to the db
     #1. update the record by changing this one word 
     #for mongo
-    record_to_update = collection.find_one({"Oid"= record_id})
+    record_to_update = collection.find_one({"Oid":record_id})
     #for now
     record_to_update = c.execute("select notepad from pages where id=?", (record_id))[0]
     #now, make the soup

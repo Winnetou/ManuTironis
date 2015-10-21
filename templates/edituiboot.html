@@ -27,45 +27,176 @@
     <div id="header">
 
         <div class="row">
-            <div>
-                <h3 id="asitis"></h3> 
+            <div style="width:25%;display:inline-block">
+                <span id="asitis"></span> 
             </div>
-        </div>
-        <div class="row">
-            <div>
+        
+            <div style="width:24%;display:inline-block">
+                <label>  Is this reading correct ? </label> 
                 <select id="correction_option" disabled="true">
-                    <option value="init">Is this reading is correct ?</option>
+                    <option value="init">select</option>
                     <option value="corr">Yes, this is correct !</option>
                     <option value="incorr">No, this is not correct </option>
                 </select>
             </div>
-            <div>
+            <div style="width:24%;display:inline-block">
+                <label>Any specific?</label>
                 <select id="semantic_spec"  disabled="true">
-                    <option value="init">Any specific ?</option>>
+                    <option value="init">select</option>
                     <option value="">its a numeral</option>
                     <option value="">its a proper name</option>
                     <option value="">its pagination, not text!</option>
                 </select>
             </div>
+            <div style="width:24%;display:inline-block">
+                <button id="approve_word" disabled="true" onclick="save()"> SAVE </button>  
+            </div>
+        </div>
+        <div class="row">
+            <ul id="alphabet" style="display:none">   
+                <li><button class="grklt">α</button></li>
+                <li><button name="α" class="vowel">α+</button></li>
+                <li><button class="grklt">β</button></li>
+                <li><button class="grklt">γ</button></li>
+                <li><button class="grklt">δ</button></li>
+                <li><button class="grklt">ε</button></li>
+                <li><button name="ε" class="vowel">ε+</button></li>
+                <li><button class="grklt">ζ</button></li>
+                <li><button class="grklt">η</button></li>
+                <li><button name="η" class="vowel">η+</button></li>
+                <li><button class="grklt">θ</button></li>
+                <li><button class="grklt">ι</button></li>
+                <li><button name="ι" class="vowel">ι+</button></li>
+                <li><button class="grklt">κ</button></li>
+                <li><button class="grklt">λ</button></li>
+                <li><button class="grklt">μ</button></li>
+                <li><button class="grklt">ν</button></li>
+                <li><button class="grklt">ξ</button></li>
+                <li><button class="grklt">ο</button></li>
+                <li><button name="ο" class="vowel">ο+</button></li>
+                <li><button class="grklt">π</button></li>
+                <li><button class="grklt">ρ</button></li>
+                <li><button name="ρ" class="vowel">ρ+</button></li>
+                <li><button>σ</button></li>
+                <li><button class="grklt">ς</button></li>
+                <li><button class="grklt">τ</button></li> 
+                <li><button class="grklt">υ</button></li>
+                <li><button name="υ" class="vowel">υ+</button></li>
+                <li><button class="grklt">φ</button></li>
+                <li><button class="grklt">χ</button></li>
+                <li><button class="grklt">ψ</button></li>
+                <li><button class="grklt">ω</button></li>
+                <li><button name="ω" class="vowel">ω+</button></li>
+                <li><button id="shift" state="down" onclick="shiftcases()">SHIFT</button></li>
+            </ul>
+            <ul class="diacritics" id="α">
+                <li><button class="grklt">ά</button></li>
+                <li><button class="grklt">ὰ</button></li>
+                <li><button class="grklt">ᾶ</button></li>
+                <li><button class="grklt">ἀ</button></li>
+                <li><button class="grklt">ἄ</button></li> 
+                <li><button class="grklt">ἂ</button></li>
+                <li><button class="grklt">ἆ</button></li>
+                <li><button class="grklt">ἁ</button></li>
+                <li><button class="grklt">ἅ</button></li>
+                <li><button class="grklt">ἃ</button></li>
+                <li><button class="grklt">ἇ</button></li>
+            </ul>
+            <ul class="diacritics" id="ε">
+                <li><button class="grklt">έ</button></li>
+                <li><button class="grklt">ὲ</button></li>
+                <li><button class="grklt">ἐ</button></li>
+                <li><button class="grklt">ἔ</button></li>
+                <li><button class="grklt">ἒ</button></li>
+                <li><button class="grklt">ἑ</button></li>
+                <li><button class="grklt">ἕ</button></li>
+                <li><button class="grklt">ἓ</button></li>
+            </ul>
+ 
+            <ul class="diacritics" id="η">
+                <li><button class="grklt">ή</button></li>
+                <li><button class="grklt">ὴ</button></li>
+                <li><button class="grklt">ῆ</button></li>
+                <li><button class="grklt">ἠ</button></li>
+                <li><button class="grklt">ἤ</button></li>
+                <li><button class="grklt">ἢ</button></li>
+                <li><button class="grklt">ἦ</button></li>
+                <li><button class="grklt">ἡ</button></li>
+                <li><button class="grklt">ἥ</button></li>
+                <li><button class="grklt">ἣ</button></li>
+                <li><button class="grklt">ἧ</button></li>
+            </ul>
+            <ul class="diacritics" id="ι">
+                <li><button class="grklt">ί</button></li>
+                <li><button class="grklt">ὶ</button></li>
+                <li><button class="grklt">ῖ</button></li>
+                <li><button class="grklt">ἰ</button></li>
+                <li><button class="grklt">ἴ</button></li>
+                <li><button class="grklt">ἲ</button></li>
+                <li><button class="grklt">ἶ</button></li>
+                <li><button class="grklt">ἱ</button></li>
+                <li><button class="grklt">ἵ</button></li>
+                <li><button class="grklt">ἳ</button></li>
+                <li><button class="grklt">ἷ</button></li>
+                
+            </ul>
+            <ul class="diacritics" id="ο">
+                <li><button class="grklt">ό</button></li>
+                <li><button class="grklt">ὸ</button></li>
+                <li><button class="grklt">ὀ</button></li>
+                <li><button class="grklt">ὄ</button></li>
+                <li><button class="grklt">ὂ</button></li>
+                <li><button class="grklt">ὁ</button></li>
+                <li><button class="grklt">ὅ</button></li>
+                <li><button class="grklt">ὃ</button></li>
+            </ul>
+            <ul class="diacritics" id="ρ">
+                <li><button class="grklt">ῤ</button></li>
+                <li><button class="grklt">ῥ</button></li>
+            </ul>
             
-            
+            <ul class="diacritics" id="υ">
+                <li><button class="grklt">ύ</button></li>
+                <li><button class="grklt">ὺ</button></li>
+                <li><button class="grklt">ῦ</button></li>
+                <li><button class="grklt">ὐ</button></li>
+                <li><button class="grklt">ὔ</button></li>
+                <li><button class="grklt">ὒ</button></li>
+                <li><button class="grklt">ὖ</button></li>
+                <li><button class="grklt">ὑ</button></li>
+                <li><button class="grklt">ὕ</button></li>
+                <li><button class="grklt">ὓ</button></li>
+                <li><button class="grklt">ὗ</button></li>
+                 
+            </ul>
+            <ul class="diacritics" id="ω">
+                <li><button class="grklt">ώ</button></li>
+                <li><button class="grklt">ὼ</button></li>
+                <li><button class="grklt">ῶ</button></li>
+                <li><button class="grklt">ὠ</button></li>
+                <li><button class="grklt">ὤ</button></li>
+                <li><button class="grklt">ὢ</button></li>
+                <li><button class="grklt">ὦ</button></li>
+                <li><button class="grklt">ὡ</button></li>
+                <li><button class="grklt">ὥ</button></li>
+                <li><button class="grklt">ὣ</button></li>
+                <li><button class="grklt">ὧ</button></li>
+            </ul>
         </div>    
         <div class="row">               
             <div>
-                <ul id="corr_list">
+                <ul id="corr_list" style="display:none">
 
                 </ul> 
             </div>
 
-            <div style="display:Xnone">
+            <div style="display:none">
                 <!--input type="text" id="final_input" name="" placeholder="final input"-->
                 <input type="text" id="word_id" name="" placeholder="id of the word">             
                 <input type="text" id="page_id"  name="" placeholder="id of the page">
             </div>
             
-            <div>
-                <button id="approve_word" disabled="true" onclick="save()"> SAVE </button>  
-            </div>
+            
 
         </div>
          

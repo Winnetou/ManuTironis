@@ -1,0 +1,26 @@
+5fa893fe-cca7-9dfd-49aa-475fd12c793b
+
+USERS JOURNEY
+
+ 
+
+
+
+
+
+
+ 		1.User clicks on a word 
+ 		2. word appears in the top
+ 		3. Options become active
+
+
+ 		 User says word is correct
+ 		/
+ CLICK -- id of the word does to FORM input, 
+ 		\
+ 		User says word is not correct   		         one of them is correct, user clicks -ss
+ 									\ 					/
+ 									suggestions appear
+
+
+WHATEVER APPEARS IN THIS DAMN EDITABLE HEADER MUST BE MOVED TO HIDDEN INPUT
