@@ -1,0 +1,249 @@
+ <!DOCTYPE html>
+ <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Quellenforschung Database</title>
+        <meta name="description" content="Quellenforschung Database">
+        <meta name="keywords" content="Quellenforschung Database">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+        <meta name="generator" content="">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=IM+Fell+English+SC" media="all">
+        <script src={{url_for('static', filename='jquery.js')}}></script>
+        <script src={{url_for('static', filename='jquery-ui.js')}}></script>
+        <!-- /Sticky header baby/-->
+        <script src={{url_for('static', filename='jquery.sticky.js')}}></script>
+        <!-- /Zoom baby/-->
+        <script src={{url_for('static', filename='jquery.elevatezoom.js')}}></script>
+        <script src={{url_for('static', filename='editui2.js')}}></script>
+        <script src={{url_for('static', filename='playcorrect.js')}}></script>
+        <script src={{url_for('static', filename='joindivide.js')}}></script>
+        <script src={{url_for('static', filename='greek_input.js')}}></script>
+        <script src={{url_for('static', filename='ordinal.js')}}></script>
+        <link href='http://fonts.googleapis.com/css?family=Didact+Gothic&subset=latin,greek-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='jquery-ui.css')}} media="all">
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='editui.css')}} media="all">
+        <link rel="shortcut icon" href={{url_for('static', filename="favicon.ico")}} type="image/x-icon">
+        <link rel="icon" href={{url_for('static', filename="favicon.ico")}} type="image/x-icon">
+
+    </head>
+<body>
+
+
+<div id="wrap">
+
+    <div id="header">
+        <div class="row">
+            <nav>
+                <ul class="nav nav-justified">
+                    <li><div id="asitis">...</div></li>
+                </ul>
+            </nav>
+            <nav>
+                <ul class="nav nav-justified">
+
+                    <li><button class="big" id="show_sugg">Show suggestions</button></li>
+                    <li><button class="big" id="approve_word" target="update" > Save </button></li></li>
+                    <li><button class="big" id="incorr">Mark as incorrect</button></li>
+                    <li><button class="big" id="corr">Mark as correct</button></li>
+                    <li><button class="big" id="join">Join with next</button></li>
+                    <li><button class="big" id="divide">Divide word</button></li>
+                    <li><button class="big" id="remove">Delete word</button></li>
+                    <li><button class="big" id="pagination">It is pagination</button></li>
+                    <!--<li><button class="big" id="mark_as">Mark as:</button></li>
+                    li><button class="big" id="play_correct">Start</button></li-->
+                </ul>
+            </nav>
+        </div>
+
+        <div class="row">
+            <ul id="alphabet" style="display:none">
+                <li><button class="grklt">α</button></li>
+                <li><button name="α" class="vowel">α+</button></li>
+                <li><button class="grklt">β</button></li>
+                <li><button class="grklt">γ</button></li>
+                <li><button class="grklt">δ</button></li>
+                <li><button class="grklt">ε</button></li>
+                <li><button name="ε" class="vowel">ε+</button></li>
+                <li><button class="grklt">ζ</button></li>
+                <li><button class="grklt">η</button></li>
+                <li><button name="η" class="vowel">η+</button></li>
+                <li><button class="grklt">θ</button></li>
+                <li><button class="grklt">ι</button></li>
+                <li><button name="ι" class="vowel">ι+</button></li>
+                <li><button class="grklt">κ</button></li>
+                <li><button class="grklt">λ</button></li>
+                <li><button class="grklt">μ</button></li>
+                <li><button class="grklt">ν</button></li>
+                <li><button class="grklt">ξ</button></li>
+                <li><button class="grklt">ο</button></li>
+                <li><button name="ο" class="vowel">ο+</button></li>
+                <li><button class="grklt">π</button></li>
+                <li><button class="grklt">ρ</button></li>
+                <li><button name="ρ" class="vowel">ρ+</button></li>
+                <li><button>σ</button></li>
+                <li><button class="grklt">ς</button></li>
+                <li><button class="grklt">τ</button></li>
+                <li><button class="grklt">υ</button></li>
+                <li><button name="υ" class="vowel">υ+</button></li>
+                <li><button class="grklt">φ</button></li>
+                <li><button class="grklt">χ</button></li>
+                <li><button class="grklt">ψ</button></li>
+                <li><button class="grklt">ω</button></li>
+                <li><button name="ω" class="vowel">ω+</button></li>
+                <li><button id="shift" state="down" onclick="shiftcases()">SHIFT</button></li>
+            </ul>
+            <ul class="diacritics" id="α">
+                <li><button class="grklt">ά</button></li>
+                <li><button class="grklt">ὰ</button></li>
+                <li><button class="grklt">ᾶ</button></li>
+                <li><button class="grklt">ἀ</button></li>
+                <li><button class="grklt">ἄ</button></li>
+                <li><button class="grklt">ἂ</button></li>
+                <li><button class="grklt">ἆ</button></li>
+                <li><button class="grklt">ἁ</button></li>
+                <li><button class="grklt">ἅ</button></li>
+                <li><button class="grklt">ἃ</button></li>
+                <li><button class="grklt">ἇ</button></li>
+            </ul>
+            <ul class="diacritics" id="ε">
+                <li><button class="grklt">έ</button></li>
+                <li><button class="grklt">ὲ</button></li>
+                <li><button class="grklt">ἐ</button></li>
+                <li><button class="grklt">ἔ</button></li>
+                <li><button class="grklt">ἒ</button></li>
+                <li><button class="grklt">ἑ</button></li>
+                <li><button class="grklt">ἕ</button></li>
+                <li><button class="grklt">ἓ</button></li>
+            </ul>
+
+            <ul class="diacritics" id="η">
+                <li><button class="grklt">ή</button></li>
+                <li><button class="grklt">ὴ</button></li>
+                <li><button class="grklt">ῆ</button></li>
+                <li><button class="grklt">ἠ</button></li>
+                <li><button class="grklt">ἤ</button></li>
+                <li><button class="grklt">ἢ</button></li>
+                <li><button class="grklt">ἦ</button></li>
+                <li><button class="grklt">ἡ</button></li>
+                <li><button class="grklt">ἥ</button></li>
+                <li><button class="grklt">ἣ</button></li>
+                <li><button class="grklt">ἧ</button></li>
+            </ul>
+            <ul class="diacritics" id="ι">
+                <li><button class="grklt">ί</button></li>
+                <li><button class="grklt">ὶ</button></li>
+                <li><button class="grklt">ῖ</button></li>
+                <li><button class="grklt">ἰ</button></li>
+                <li><button class="grklt">ἴ</button></li>
+                <li><button class="grklt">ἲ</button></li>
+                <li><button class="grklt">ἶ</button></li>
+                <li><button class="grklt">ἱ</button></li>
+                <li><button class="grklt">ἵ</button></li>
+                <li><button class="grklt">ἳ</button></li>
+                <li><button class="grklt">ἷ</button></li>
+
+            </ul>
+            <ul class="diacritics" id="ο">
+                <li><button class="grklt">ό</button></li>
+                <li><button class="grklt">ὸ</button></li>
+                <li><button class="grklt">ὀ</button></li>
+                <li><button class="grklt">ὄ</button></li>
+                <li><button class="grklt">ὂ</button></li>
+                <li><button class="grklt">ὁ</button></li>
+                <li><button class="grklt">ὅ</button></li>
+                <li><button class="grklt">ὃ</button></li>
+            </ul>
+            <ul class="diacritics" id="ρ">
+                <li><button class="grklt">ῤ</button></li>
+                <li><button class="grklt">ῥ</button></li>
+            </ul>
+
+            <ul class="diacritics" id="υ">
+                <li><button class="grklt">ύ</button></li>
+                <li><button class="grklt">ὺ</button></li>
+                <li><button class="grklt">ῦ</button></li>
+                <li><button class="grklt">ὐ</button></li>
+                <li><button class="grklt">ὔ</button></li>
+                <li><button class="grklt">ὒ</button></li>
+                <li><button class="grklt">ὖ</button></li>
+                <li><button class="grklt">ὑ</button></li>
+                <li><button class="grklt">ὕ</button></li>
+                <li><button class="grklt">ὓ</button></li>
+                <li><button class="grklt">ὗ</button></li>
+
+            </ul>
+            <ul class="diacritics" id="ω">
+                <li><button class="grklt">ώ</button></li>
+                <li><button class="grklt">ὼ</button></li>
+                <li><button class="grklt">ῶ</button></li>
+                <li><button class="grklt">ὠ</button></li>
+                <li><button class="grklt">ὤ</button></li>
+                <li><button class="grklt">ὢ</button></li>
+                <li><button class="grklt">ὦ</button></li>
+                <li><button class="grklt">ὡ</button></li>
+                <li><button class="grklt">ὥ</button></li>
+                <li><button class="grklt">ὣ</button></li>
+                <li><button class="grklt">ὧ</button></li>
+            </ul>
+        </div>
+        <div class="row">
+            <div>
+                <ul id="corr_list" style="display:none">
+
+                </ul>
+            </div>
+
+            <div style="display:none">
+                <!--input type="text" id="final_input" name="" placeholder="final input"-->
+                <input type="text" id="action" name="action" placeholder="">
+                <input type="text" id="word_id" name="" placeholder="">
+                <input type="text" id="page_id" name="" value="{{page['id']}}">
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <div id="scanpage_container">
+
+        <img id="scanpage" alt="" src="/static{{page['image_url']}}"  data-zoom-image="{{page['image_url']}}">
+
+    </div>
+
+    <div id="page_text_container">
+        {{page['notepad']|safe}}
+    </div>
+
+    <div class="arrowNav">
+
+        <div class="arrowRight" >
+            {% if page['prev_page'] %}
+                <a href="{{page['next_page']}}"> >>  </a>
+            {% endif %}
+        </div>
+
+        <div class="arrowLeft">
+            {% if page['next_page'] %}
+                <a href="{{page['prev_page']}}"> << </a>
+            {% endif %}
+
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+ </body>

@@ -193,12 +193,11 @@ function get_suggestions(word)
 function save()
 {
 	disable()
-	var page_id = $("#page_id").val();
 	var word_id = $("#word_id").val();
 	var correct_form = $('#asitis').text();
 	//now, send it all
-	var url1 = 'http://127.0.0.1:5000/update'
-	var data1 = { 'page_id':page_id,
+	var url1 = '/update'
+	var data1 = {
 	'word_id':word_id,
 	'correct_form':correct_form
 	}
