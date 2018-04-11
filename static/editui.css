@@ -1,18 +1,16 @@
-
 body,
 html {
     margin:0px;
     padding:2%;
     /*padding-right:1%;
     padding-left:1%;*/
-    font-family: 'Didact Gothic', sans-serif;   
+    font-family: 'Didact Gothic', sans-serif;
 }
 
 #header {
     padding:1%;
     background:white;
-    height: 120px;
-    /*display: none;*/
+    height: 10%px;
 }
 #wrap {
     width:100%;
@@ -22,7 +20,6 @@ html {
     float:left;
     width:47%;
     padding:1%;
-    /*border-style: dashed;*/
 }
 #scanpage {
     max-width:100%;
@@ -33,9 +30,9 @@ html {
     float:right;
     width:47%;
     padding:1%;
-    font-size: 92%;
-    letter-spacing: 1px;
-    /*border-style: dashed;*/
+    font-size: 0.91em;
+    letter-spacing: 0.0825em;
+
 }
 
 div.row {
@@ -47,9 +44,6 @@ ul {
 }
 li {
     display: inline;
-}
-#approve_word {
-    width: 20em;  height: 2em;
 }
 /* SET OF CSS RULES FOR ARROWS NAVGIATING FORWARD AND BACK */
 .arrowLeft a {
@@ -63,7 +57,7 @@ padding: 15px 10px;
 -o-transition: .2s ease-in;
 transition: .2s ease-in;
 }
- 
+
 .arrowLeft a:hover {
 left: 0;
 -webkit-transition: .2s ease-in;
@@ -72,7 +66,7 @@ left: 0;
 transition: .2s ease-in;
 color: #fff;
 }
- 
+
 .arrowRight a {
 position: fixed;
 z-index: 100;
@@ -84,7 +78,7 @@ padding: 15px 10px;
 -o-transition: .2s ease-in;
 transition: .2s ease-in;
 }
- 
+
 .arrowRight a:hover {
 right: 0;
 -webkit-transition: .2s ease-in;
@@ -93,7 +87,7 @@ right: 0;
 transition: .2s ease-in;
 color: #fff;
 }
- 
+
 .arrowNav a {
 background: #666666;
 color: #fff;
@@ -102,15 +96,74 @@ font-size: 16px;
 }
 
 /* SET OF CSS RULES FOR HTML OF THE OCRED */
-span.greek_text {
-    margin: 0px;
+#asitis {
+    font-size: 140%;
+    padding: 1%;
+    border: none;
+    background: none;
+    text-align:center;
+    vertical-align:middle;
+    letter-spacing: 3px;
+    display: inline-block;
+
+
+}
+button {
+    border: 1px;
+    border-style: solid;
+    display: inline-block;
+    background-color: white;
+    letter-spacing: 1%;
+    font-family: inherit;
+
+}
+
+button.big {
+    text-transform: uppercase;
+    font-size: 110%;
+    font-family: "IM Fell English SC";
+    width: 100%;
+    height: 120%;
+    text-align:center;
+    vertical-align:middle;
+    /* FIXME - button MUST fill the entire li */
+}
+
+button.big:enabled:hover {
+    background-color: #e6e6e6;
+}
+
+button.big:disabled {
+    color:#e6e6e6;
+}
+
+.nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    width: 100%;
+    display: table;
+}
+
+.nav>li {
+    display: table-cell;
+    width: 10%;
+    height: 100%;
+    float: none;
+}
+
+div.page {
+    padding: 3%;
 }
 
 span.greek_text {
     margin: 0px;
+    font-size: 1.05vw;
 }
+
 span.latin_text{
-
+    padding-top: 2%;
+    font-size: 0.85vw;
     margin: 0px;
     color: #CCCCCC;
 }
@@ -118,26 +171,55 @@ span.latin_text{
 span[corr="0"] {
     border-radius: 3px;
     background: #FF8080;
-} 
+    /*border: dotted;
+    border-color: #FA0000;*/
+}
+/* span shining - to highlight corrected text*/
+span.shining {
+    border-radius: 4px;
+    background: #FFFF00;
+
+}
+span.dying {
+    border-radius: 4px;
+    background: #000A0A;
+
+}
 /* THIS TO MAKE EVERY OCR LINE LOOK LIKE A NEW LINE OF TEXT*/
-span.ocr_line {
+span.line {
     display: block;
+    padding: 0.25%;
+
 }
 span.left {
     float: left;
-    padding: 20px;
 }
+span.side_pagination.left {
+    margin-left: -5%;
+}
+
 span.right {
     float: right;
 }
+/* pagetitle is a title on every page*/
+span.pagetitle {
+    letter-spacing: 0.75vw;
+}
+
 p.header {
     text-align: center;
     font-size: 115%;
+    padding-top: 2.5%;
+    padding-bottom: 0.6%;
+
+    font-size: 1.15vw;
 }
+
 hr {
     border: 0;
     border-bottom: 1px dashed #ccc;
     background: #999;
+    margin: 1%;
 }
 
 .diacritics {

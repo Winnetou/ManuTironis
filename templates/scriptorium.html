@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block body %}
+<p class="intro">
+	Quellenforschung projects involves digitization of greek texts not included in other open-access texts collections.
+	All corrected OCR-outputs are available in our small library.
+	<br>
+	All texts are licensed under
+	<a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" rel="license">
+    Creative Commons Attribution-ShareAlike 3.0
+	</a>  License.
+
+	<span class="right">
+		<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png"></a>
+	</span>
+</p>
+
+
+<ul class="quoteslist">
+{% for q in titles %}
+		<li >
+        	<a class="titles" href={{url_for('tiro', title=q['title'], pagenumber=q['pagenumber'])}}>
+            <
+            <span class="title">{{q['title']}}</span>
+            >
+            </a>
+        </li>
+
+{% endfor %}
+</ul>
+
+
+
+
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+<script>
+
+$(document).ready(function() {
+    });
+</script>
+{% endblock %}

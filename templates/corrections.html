@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Corrections</title>
+</head>
+<body>
+<table>
+    <thead>
+
+    </thead>
+    <tbody>
+
+    </tbody>
+    <tr>
+        <td>
+
+        </td>
+    </tr>
+</table>
+
+
+
+
+<ul class="quoteslist">
+{% for q in corrections %}
+		<li >
+        	<a class="titles" href={{url_for('tiro', title=q['title'], pagenumber=q['token_affected'])}}>
+
+            <span  >{{q['title']}}</span>
+
+            </a>
+        </li>
+
+{% endfor %}
+</ul>
+</body>
+</html>

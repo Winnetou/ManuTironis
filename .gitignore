@@ -1,0 +1,7 @@
+static/img
+.idea/*
+*.pyc
+*.pyc
+*.txt
+*.log
+venv/*

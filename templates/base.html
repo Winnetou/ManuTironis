@@ -13,24 +13,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
         <meta name="generator" content="">
 
-        <!--link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" media="all"-->        
+
         <link rel="stylesheet" type="text/css" href={{url_for('static', filename='style.css')}}  media="all">
-        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='IMFeENsc28P.ttf')}} media="all">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=IM+Fell+English+SC" media="all">
         <!--link rel="stylesheet" type="text/css" href={{url_for('static', filename='GoudyInitialen.ttf')}} media="all"-->
-        <!--<link href='http://fonts.googleapis.com/css?family=Didact+Gothic&subset=latin,greek-ext' rel='stylesheet' type='text/css'>-->       
-        <!--jeszxze czyste jquery-->
-        <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>--> 
-        <script src={{url_for('static', filename='jquery.js')}}></script>
+        <link href='http://fonts.googleapis.com/css?family=Didact+Gothic&subset=latin,greek-ext' rel='stylesheet' type='text/css'>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <!--script src={{url_for('static', filename='jquery.js')}}></script-->
         <script src={{url_for('static', filename='jquery-ui.js')}}></script>
-        <link rel="shortcut icon" href={{url_for('static', filename="favicon.ico")}}>  
-        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='jquery-ui.css')}} media="all"> <!--na razie nie uzywany--> 
-	     
+        <link rel="shortcut icon" href={{url_for('static', filename="favicon.ico")}} type="image/x-icon">
+        <link rel="icon" href={{url_for('static', filename="favicon.ico")}} type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href={{url_for('static', filename='jquery-ui.css')}} media="all"> <!--na razie nie uzywany-->
+
     </head>
 <body>
     <!--body oncontextmenu="return false;"-->
     <div class="wrapper column">
         <div class="column">
-            <h1 id="header"><a href={{url_for('main')}}>Quellenforschung</a></h1>
+            <h1 id="header"><a href="/">Quellenforschung</a></h1>
 {% block body %}
 
 {% endblock %}
